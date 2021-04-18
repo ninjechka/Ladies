@@ -8,25 +8,25 @@ public class background : MonoBehaviour
     private Camera mainCamera;
     private Vector2 screenBounds;
     public float choke;
-    private float scrollSpeed = 0;
+    public float scrollSpeed = 0;
 
     void Start()
     {
         mainCamera = gameObject.GetComponent<Camera>();
         screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
-        foreach (GameObject obj in levels)
+        foreach (var obj in levels)
         {
             loadChildObjects(obj);
         }
     }
     void loadChildObjects(GameObject obj)
     {
-        float objectWidth = obj.GetComponent<SpriteRenderer>().bounds.size.x - choke;
-        int childsNeeded = (int)Mathf.Ceil(screenBounds.x * 2 / objectWidth);
-        GameObject clone = Instantiate(obj) as GameObject;
+        var objectWidth = obj.GetComponent<SpriteRenderer>().bounds.size.x - choke;
+        var childsNeeded = (int)Mathf.Ceil(screenBounds.x * 2 / objectWidth);
+        var clone = Instantiate(obj);
         for (int i = 0; i <= childsNeeded; i++)
         {
-            GameObject c = Instantiate(clone) as GameObject;
+            GameObject c = Instantiate(clone);
             c.transform.SetParent(obj.transform);
             c.transform.position = new Vector3(objectWidth * i, obj.transform.position.y, obj.transform.position.z);
             c.name = obj.name + i;
@@ -36,36 +36,40 @@ public class background : MonoBehaviour
     }
     void repositionChildObjects(GameObject obj)
     {
-        Transform[] children = obj.GetComponentsInChildren<Transform>();
+        var children = obj.GetComponentsInChildren<Transform>();
         if (children.Length > 1)
         {
-            GameObject firstChild = children[1].gameObject;
-            GameObject lastChild = children[children.Length - 1].gameObject;
-            float halfObjectWidth = lastChild.GetComponent<SpriteRenderer>().bounds.extents.x - choke;
+            var firstChild = children[1].gameObject;
+            var lastChild = children[children.Length - 1].gameObject;
+            var halfObjectWidth = lastChild.GetComponent<SpriteRenderer>().bounds.extents.x - choke;
             if (transform.position.x + screenBounds.x > lastChild.transform.position.x + halfObjectWidth)
             {
                 firstChild.transform.SetAsLastSibling();
-                firstChild.transform.position = new Vector3(lastChild.transform.position.x + halfObjectWidth * 2, lastChild.transform.position.y, lastChild.transform.position.z);
+                firstChild.transform.position = new Vector3(lastChild.transform.position.x + halfObjectWidth * 2,
+                    lastChild.transform.position.y, 
+                    lastChild.transform.position.z);
             }
             else if (transform.position.x - screenBounds.x < firstChild.transform.position.x - halfObjectWidth)
             {
                 lastChild.transform.SetAsFirstSibling();
-                lastChild.transform.position = new Vector3(firstChild.transform.position.x - halfObjectWidth * 2, firstChild.transform.position.y, firstChild.transform.position.z);
+                lastChild.transform.position = new Vector3(firstChild.transform.position.x - halfObjectWidth * 2,
+                    firstChild.transform.position.y,
+                    firstChild.transform.position.z);
             }
         }
     }
     void Update()
     {
 
-        Vector3 velocity = Vector3.zero;
-        Vector3 desiredPosition = transform.position + new Vector3(scrollSpeed, 0, 0);
-        Vector3 smoothPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, 0.3f);
+        var velocity = Vector3.zero;
+        var desiredPosition = transform.position + new Vector3(scrollSpeed, 0, 0);
+        var smoothPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, 0.3f);
         transform.position = smoothPosition;
 
     }
     void LateUpdate()
     {
-        foreach (GameObject obj in levels)
+        foreach (var obj in levels)
         {
             repositionChildObjects(obj);
         }
