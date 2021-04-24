@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class Movement : MonoBehaviour
     private bool canWallJump;
     private bool onWall;
     private bool first = true;
+    private bool isDead;
 
     void Start()
     {
@@ -35,7 +35,7 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-		if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
+        if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
             isGrounded = true;
         else isGrounded = false;
 
@@ -53,6 +53,11 @@ public class Movement : MonoBehaviour
                 anim.Play("run");
             sprite.flipX = true;
         }
+        else if (Input.GetKey("e") && isGrounded)
+        {
+            anim.Play("attack");
+            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+        }
         else
         {
             if (isGrounded)
@@ -66,10 +71,23 @@ public class Movement : MonoBehaviour
         }
 
         if (Input.GetKey("w") || Input.GetKey("up") && canJump)
-            Lending();
+            Ledge();
+        
     }
 
-    private void Lending()
+    public void Dead()
+    {
+        if (isDead)
+        { return;}
+        PushAway(50f);
+        isDead = true;
+    }
+    public void PushAway(float pushPower)
+    {
+        rb2D.velocity = new Vector2(rb2D.velocity.x, 3f);
+    }
+
+    private void Ledge()
     {
         if (!onWall) return;
         rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
@@ -80,7 +98,8 @@ public class Movement : MonoBehaviour
     {
         if (onWall)
         {
-            rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);
+            rb2D.velocity = isGrounded ? new Vector2(rb2D.velocity.x, jumpForce) 
+                : new Vector2(rb2D.velocity.x, 5.5f);
             anim.Play("jump");
             first = false;
         }
