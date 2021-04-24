@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: scorpio
+  m_Name: idle
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -22,20 +22,20 @@ AnimationClip:
     - time: 0
       value: {fileID: -6493989785161822916, guid: a01e68672b9e98947892d2726c8c41fe,
         type: 3}
-    - time: 0.11111111
+    - time: 0.14285715
       value: {fileID: 8035097060380119223, guid: a01e68672b9e98947892d2726c8c41fe,
         type: 3}
-    - time: 0.22222222
+    - time: 0.2857143
       value: {fileID: 2119505984166483719, guid: a01e68672b9e98947892d2726c8c41fe,
         type: 3}
-    - time: 0.33333334
+    - time: 0.42857143
       value: {fileID: -669078196644575352, guid: a01e68672b9e98947892d2726c8c41fe,
         type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 9
+  m_SampleRate: 7
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -59,7 +59,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.44444445
+    m_StopTime: 0.5714286
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
