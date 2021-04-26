@@ -5,35 +5,50 @@ using UnityEngine.UI;
 
 public class HeartsPlayer : MonoBehaviour
 {
-    public float health;
-    public static int numOfHearts;
+    public float health = 3;
+    public static int numOfHearts = 3;
     public Image[] hearts;
     public Sprite fullHeart;
     public Sprite emptyHeart;
     void Start()
     {
-        
+       
     }
     
     void Update()
     {
-        
+        if (numOfHearts > 3)
+            health = 3;
+        else health = numOfHearts;
+        switch (health)
+        {
+            case 3:
+                hearts[1].sprite = fullHeart;
+                hearts[2].sprite = fullHeart;
+                hearts[0].sprite = fullHeart;
+                break;
+            case 2:
+                hearts[1].sprite = fullHeart;
+                hearts[0].sprite = fullHeart;
+                hearts[2].sprite = emptyHeart;
+                break;
+            case 1:
+                hearts[0].sprite = fullHeart;
+                hearts[1].sprite = emptyHeart;
+                hearts[2].sprite = emptyHeart;
+                break;
+            case 0:
+                hearts[1].sprite = emptyHeart;
+                hearts[2].sprite = emptyHeart;
+                hearts[0].sprite = emptyHeart;
+                break;
+                
+        }
     }
 
     void FixedUpdate()
     {
-        numOfHearts = 3;
-        if (health > numOfHearts)
-            health = numOfHearts;
-        for (int i = 0; i < hearts.Length; i++)
-        {
-            if (i < Mathf.RoundToInt(health))
-                hearts[i].sprite = emptyHeart;
-            else hearts[i].sprite = fullHeart;
-            if (i < numOfHearts)
-                hearts[i].enabled = true;
-            else
-                hearts[i].enabled = false;
-        }
+        
+        
     }
 }
