@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -13,13 +14,16 @@ public class Enemy : MonoBehaviour
     private bool walking;
     private bool isDead;
     private int hitCount;
-
+    private int hits = 0;
+    private bool attacking;
     public void Hit()
     {
-        hitCount++;
         if (hitCount < 2)
+        {
             anim.Play("hurt");
-        if (hitCount > 2)
+            hitCount++;
+        }
+        else
         {
             isDead = true;
             anim.SetBool("walk", false);
@@ -27,9 +31,12 @@ public class Enemy : MonoBehaviour
             Destroy(GetComponent<Collider2D>(), 1);
             Destroy(GetComponent<Rigidbody2D>(), 1);
             Destroy(this, 2);
+
+           // Destroy(gameObject);
         }
         
     }
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -44,6 +51,8 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
+        if (attacking)
+            anim.Play("attack");
         Walk();
     }
 
@@ -61,10 +70,24 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D coll)
     {
-        if ( coll.transform.tag == "Player")
+        if (coll.gameObject.tag.Equals("Player"))
         {
-            coll.gameObject.GetComponent<Movement>().Dead();
+            attacking = true;
+            if (hits < 3)
+            {
+                hits++;
+            }
+            else
+            {
+                coll.gameObject.GetComponent<Movement>().Dead();
+                attacking = false;
+            }
         }
+    }
+
+    void OnCollisionExit2D(Collision2D coll)
+    {
+        attacking = false;
     }
 
     private IEnumerator Idle()

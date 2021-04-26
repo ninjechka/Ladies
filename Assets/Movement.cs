@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.WSA.Persistence;
 
 public class Movement : MonoBehaviour
 {
+    public float hangTime = .2f;
+    private float hangCounter;
     private float speed = 2f;
-    private float jumpForce = 5f;
+    private float jumpForce = 4f;
     private Animator anim;
     private Rigidbody2D rb2D;
     private SpriteRenderer sprite;
@@ -26,32 +29,28 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        if (isGrounded)
+            hangCounter = hangTime;
+        else hangCounter -= Time.deltaTime;
+
         if (isGrounded || canWallJump)
             canJump = true;
         else canJump = false;
+
         if (isGrounded)
             first = true;
     }
 
     void FixedUpdate()
     {
-        if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
+        if (Physics2D.Linecast(transform.position, groundCheck.position, 
+            1 << LayerMask.NameToLayer("Ground")))
             isGrounded = true;
         else isGrounded = false;
-
-        if (Input.GetKey("d") || Input.GetKey("right"))
+        rb2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, rb2D.velocity.y);
+        if (Input.GetAxisRaw("Horizontal") != 0)
         {
-            rb2D.velocity = new Vector2(speed, rb2D.velocity.y);
-            if (isGrounded)
-                anim.Play("run");
-            sprite.flipX = false;
-        }
-        else if (Input.GetKey("a") || Input.GetKey("left"))
-        {
-            rb2D.velocity = new Vector2(-speed, rb2D.velocity.y);
-            if (isGrounded)
-                anim.Play("run");
-            sprite.flipX = true;
+            Run();
         }
         else if (Input.GetKey("e") && isGrounded)
         {
@@ -64,27 +63,41 @@ public class Movement : MonoBehaviour
                 anim.Play("idle");
             rb2D.velocity = new Vector2(0, rb2D.velocity.y);
         }
-        ;
-        if (Input.GetKey("space") && (isGrounded || (first && canJump)))
+        if (Input.GetKey("space") && (hangCounter >= 0.0f || (first && canJump)))
         {
             Jump();
         }
-
         if (Input.GetKey("w") || Input.GetKey("up") && canJump)
             Ledge();
-        
+
     }
 
+    private void Run()
+    {
+        if (isGrounded)
+            anim.Play("run");
+        var dir = transform.right * Input.GetAxis("Horizontal");
+        rb2D.velocity = new Vector2(speed * Input.GetAxisRaw("Horizontal"), rb2D.velocity.y);
+        sprite.flipX = dir.x < 0.0f;
+
+    }
     public void Dead()
     {
         if (isDead)
-        { return;}
-        PushAway(50f);
+        { return; }
         isDead = true;
+        Destroy(GetComponent<Collider2D>(), 1);
+        Destroy(GetComponent<Rigidbody2D>(), 1);
+        Destroy(this, 2);
+        Destroy(gameObject);
+
+        // anim.Play("dead");
     }
-    public void PushAway(float pushPower)
+    public void GetDamage()
     {
-        rb2D.velocity = new Vector2(rb2D.velocity.x, 3f);
+        
+        HeartsPlayer.numOfHearts -=1;
+        anim.Play("hurt");
     }
 
     private void Ledge()
@@ -97,17 +110,9 @@ public class Movement : MonoBehaviour
     private void Jump()
     {
         if (onWall)
-        {
-            rb2D.velocity = isGrounded ? new Vector2(rb2D.velocity.x, jumpForce) 
-                : new Vector2(rb2D.velocity.x, 5.5f);
-            anim.Play("jump");
             first = false;
-        }
-        else
-        {
-            rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);
-            anim.Play("jump");
-        }
+        rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);
+        anim.Play("jump");
     }
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -121,7 +126,7 @@ public class Movement : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D coll)
     {
-        if (coll.gameObject.tag.Equals("Wall"))
+        if (coll.gameObject.tag.Equals("Wall") && !isGrounded)
         {
             onWall = false;
             canWallJump = false;
