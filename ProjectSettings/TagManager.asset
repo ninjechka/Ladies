@@ -17,7 +17,7 @@ TagManager:
   - 
   - 
   - Ground
-  - 
+  - front
   - 
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: frontt
+    uniqueID: 457595735
     locked: 0
