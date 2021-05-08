@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public AudioSource hitSound;
+    public AudioSource enemyDeathSound;
     [SerializeField] private List<Transform> points;
     private float speed = 1f;
 
@@ -22,15 +24,18 @@ public class Enemy : MonoBehaviour
         {
             anim.Play("hurt");
             hitCount++;
+            hitSound.Play();
         }
         else
         {
             isDead = true;
             anim.SetBool("walk", false);
             anim.Play("dead");
+            enemyDeathSound.Play();
             Destroy(GetComponent<Collider2D>(), 1);
             Destroy(GetComponent<Rigidbody2D>(), 1);
             Destroy(this, 2);
+            
 
            // Destroy(gameObject);
         }

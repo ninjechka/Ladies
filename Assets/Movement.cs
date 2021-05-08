@@ -6,6 +6,7 @@ using UnityEngine.XR.WSA.Persistence;
 public class Movement : MonoBehaviour
 {
     public float hangTime = .2f;
+    public AudioSource damageSound;
     private float hangCounter;
     private float speed = 2f;
     private float jumpForce = 4f;
@@ -95,8 +96,8 @@ public class Movement : MonoBehaviour
     }
     public void GetDamage()
     {
-        
         HeartsPlayer.numOfHearts -=1;
+        damageSound.Play();
         anim.Play("hurt");
     }
 

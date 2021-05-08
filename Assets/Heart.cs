@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Heart : MonoBehaviour
 {
+    public AudioSource heartSound;
     void Start()
     {
         
@@ -19,6 +20,7 @@ public class Heart : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             HeartsPlayer.numOfHearts += 1;
+            heartSound.Play();
             Destroy(gameObject);
         }
     }
