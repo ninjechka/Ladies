@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Stars : MonoBehaviour
 {
-    
-    [SerializeField] public static  Image stars;
+    [SerializeField] public Image stars;
     [SerializeField] private Sprite[] diffStars;
     void Start()
     {
