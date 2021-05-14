@@ -14,9 +14,14 @@ public class Scenes : MonoBehaviour
     {
         SceneManager.LoadScene(number);
     }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
     void Start()
     {
-        levelComplete = PlayerPrefs.GetInt("LevelComplete");
+        levelComplete = PlayerPrefs.GetInt("Levels");
         level2.interactable = false;
         level3.interactable = false;
         switch (levelComplete)

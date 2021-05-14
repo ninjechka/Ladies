@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2578969084988899070}
   - component: {fileID: 4423324662371995898}
-  - component: {fileID: 542868906691400351}
+  - component: {fileID: 7245934151468684042}
   m_Layer: 0
   m_Name: jungle tileset_20 (1)
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &542868906691400351
+--- !u!61 &7245934151468684042
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +120,6 @@ GameObject:
   - component: {fileID: 6227282209218475816}
   - component: {fileID: 754382235704279637}
   - component: {fileID: -8921172802744275736}
-  - component: {fileID: 450258278904712802}
   m_Layer: 0
   m_Name: longPlatform
   m_TagString: Untagged
@@ -207,7 +206,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.00807333, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -218,31 +217,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.2, y: 0.64}
-  m_EdgeRadius: 0
---- !u!61 &450258278904712802
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8601927724988805008}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.2, y: 0.64}
-    newSize: {x: 3.2, y: 0.64}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.2, y: 0.64}
+  m_Size: {x: 3.183855, y: 0.64}
   m_EdgeRadius: 0

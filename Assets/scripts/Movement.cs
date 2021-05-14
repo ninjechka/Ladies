@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.WSA.Persistence;
 
 public class Movement : MonoBehaviour
 {
     public float hangTime = .2f;
+    public AudioSource damageSound;
     private float hangCounter;
     private float speed = 2f;
     private float jumpForce = 4f;
@@ -31,12 +31,10 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        if (isDead)
-            SceneManager.LoadScene("Lose");
         if (isGrounded)
             hangCounter = hangTime;
         else hangCounter -= Time.deltaTime;
-
+        if (isDead) Dead();
         if (isGrounded || canWallJump)
             canJump = true;
         else canJump = false;
@@ -47,7 +45,7 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Physics2D.Linecast(transform.position, groundCheck.position, 
+        if (Physics2D.Linecast(transform.position, groundCheck.position,
             1 << LayerMask.NameToLayer("Ground")))
             isGrounded = true;
         else isGrounded = false;
@@ -87,16 +85,17 @@ public class Movement : MonoBehaviour
     }
     public void Dead()
     {
-        if (isDead)
-        { return; }
         isDead = true;
+        Destroy(GetComponent<Collider2D>(), 1);
+        Destroy(GetComponent<Rigidbody2D>(), 1);
+        Destroy(this, 2);
+        Destroy(gameObject);
         SceneManager.LoadScene("Lose");
-        // anim.Play("dead");
     }
     public void GetDamage()
     {
-        
-        HeartsPlayer.numOfHearts -=1;
+        HeartsPlayer.numOfHearts -= 1;
+        damageSound.Play();
         anim.Play("hurt");
     }
 

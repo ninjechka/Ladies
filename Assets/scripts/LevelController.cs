@@ -6,23 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
-    private int sceneIndex;
     private int levelComplete;
-
+    private int last;
     void Start()
     {
-        sceneIndex = SceneManager.GetActiveScene().buildIndex;
-        levelComplete = PlayerPrefs.GetInt("LevelComplete");
+        levelComplete = PlayerPrefs.GetInt("Levels");
+        last = PlayerPrefs.GetInt("LastLevel");
     }
 
     public void IsEndGame()
     {
-        if (sceneIndex == 3)
+        if (last == 3)
             Invoke("LoadMainMenu", 1f);
         else
         {
-            if (levelComplete < sceneIndex)
-                PlayerPrefs.SetInt("LevelComplete", sceneIndex);
+            if (levelComplete < last)
+                PlayerPrefs.SetInt("Levels", last);
             Invoke("NextLevel", 1f);
         }
     }
@@ -34,11 +33,13 @@ public class LevelController : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.LoadScene(sceneIndex + 1);
+        if (last >= 3)
+            LoadMainMenu();
+        else SceneManager.LoadScene(last + 1);
     }
 
-    public void Load()
+    public void ReLoad()
     {
-        SceneManager.LoadScene(sceneIndex);
+        SceneManager.LoadScene(last);
     }
 }

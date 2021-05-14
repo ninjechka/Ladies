@@ -7,7 +7,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private List<Transform> points;
     private float speed = 1f;
-
+    public AudioSource hitSound;
+    public AudioSource enemyDeathSound;
     private Animator anim;
     private int currentIndex;
     private Vector2 currentPoint;
@@ -22,17 +23,17 @@ public class Enemy : MonoBehaviour
         {
             anim.Play("hurt");
             hitCount++;
+            hitSound.Play();
         }
         else
         {
             isDead = true;
             anim.SetBool("walk", false);
+            enemyDeathSound.Play();
             anim.Play("dead");
             Destroy(GetComponent<Collider2D>(), 1);
             Destroy(GetComponent<Rigidbody2D>(), 1);
             Destroy(this, 2);
-
-           // Destroy(gameObject);
         }
         
     }
@@ -73,15 +74,6 @@ public class Enemy : MonoBehaviour
         if (coll.gameObject.tag.Equals("Player"))
         {
             attacking = true;
-            if (hits < 3)
-            {
-                hits++;
-            }
-            else
-            {
-                coll.gameObject.GetComponent<Movement>().Dead();
-                attacking = false;
-            }
         }
     }
 

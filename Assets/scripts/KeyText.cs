@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class KeyText : MonoBehaviour
 {
+    public static  int levelComplete = 0;
     Text text;
     public static int key;
     
@@ -20,6 +21,12 @@ public class KeyText : MonoBehaviour
     {
         text.text = key.ToString() + "/3";
         if (key == 3)
+        {
+            PlayerPrefs.SetInt("LastLevel", SceneManager.GetActiveScene().buildIndex);
             SceneManager.LoadScene("Win");
+            levelComplete++;
+            PlayerPrefs.SetInt("Levels", levelComplete);
+        }
+        else PlayerPrefs.SetInt("LastLevel", SceneManager.GetActiveScene().buildIndex);
     }
 }

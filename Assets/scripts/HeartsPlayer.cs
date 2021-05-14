@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class HeartsPlayer : MonoBehaviour
 {
     public float health = 3;
-    public static int numOfHearts = 3;
+    public static int numOfHearts;
     public Image[] hearts;
     public Sprite fullHeart;
     public Sprite emptyHeart;
     void Start()
     {
+        numOfHearts = 3;
         hearts[1].sprite = fullHeart;
         hearts[2].sprite = fullHeart;
         hearts[0].sprite = fullHeart;

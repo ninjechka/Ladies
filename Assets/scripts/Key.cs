@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Key : MonoBehaviour
 {
+    [SerializeField]public AudioSource keySound;
     void Start()
     {
     }
@@ -19,6 +20,7 @@ public class Key : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             KeyText.key += 1;
+            keySound.Play();
             Destroy(gameObject);
         }
     }
