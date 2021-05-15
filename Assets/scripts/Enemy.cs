@@ -15,7 +15,6 @@ public class Enemy : MonoBehaviour
     private bool walking;
     private bool isDead;
     private int hitCount;
-    private int hits = 0;
     private bool attacking;
     public void Hit()
     {
@@ -40,6 +39,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        isDead = false;
         anim = GetComponent<Animator>();
         currentPoint = points[0].position;
         walking = true;

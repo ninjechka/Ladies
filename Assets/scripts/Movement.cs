@@ -15,10 +15,6 @@ public class Movement : MonoBehaviour
     private SpriteRenderer sprite;
     private bool isGrounded;
     [SerializeField] private Transform groundCheck;
-    private bool canJump;
-    private bool canWallJump;
-    private bool onWall;
-    private bool first = true;
     public static  bool isDead;
 
     void Start()
@@ -35,12 +31,6 @@ public class Movement : MonoBehaviour
             hangCounter = hangTime;
         else hangCounter -= Time.deltaTime;
         if (isDead) Dead();
-        if (isGrounded || canWallJump)
-            canJump = true;
-        else canJump = false;
-
-        if (isGrounded)
-            first = true;
     }
 
     void FixedUpdate()
@@ -65,13 +55,10 @@ public class Movement : MonoBehaviour
                 anim.Play("idle");
             rb2D.velocity = new Vector2(0, rb2D.velocity.y);
         }
-        if (Input.GetKey("space") && (hangCounter >= 0.0f || (first && canJump)))
+        if (Input.GetKey("space") && hangCounter >= 0.0f)
         {
             Jump();
         }
-        if (Input.GetKey("w") || Input.GetKey("up") && canJump)
-            Ledge();
-
     }
 
     private void Run()
@@ -99,36 +86,10 @@ public class Movement : MonoBehaviour
         anim.Play("hurt");
     }
 
-    private void Ledge()
-    {
-        if (!onWall) return;
-        rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
-        anim.Play("ledge");
-    }
 
     private void Jump()
     {
-        if (onWall)
-            first = false;
         rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);
         anim.Play("jump");
-    }
-
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        if (coll.gameObject.tag.Equals("Wall"))
-        {
-            onWall = true;
-            canWallJump = true;
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D coll)
-    {
-        if (coll.gameObject.tag.Equals("Wall") && !isGrounded)
-        {
-            onWall = false;
-            canWallJump = false;
-        }
     }
 }

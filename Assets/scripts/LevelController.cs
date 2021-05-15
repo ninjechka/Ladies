@@ -14,6 +14,11 @@ public class LevelController : MonoBehaviour
         last = PlayerPrefs.GetInt("LastLevel");
     }
 
+    void Update()
+    {
+        if (levelComplete > PlayerPrefs.GetInt("Levels"))
+            PlayerPrefs.SetInt("Levels", last);
+    }
     public void IsEndGame()
     {
         if (last == 3)

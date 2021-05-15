@@ -21,7 +21,10 @@ public class HeartsPlayer : MonoBehaviour
     void Update()
     {
         if (numOfHearts == 0)
+        {
+            numOfHearts = 3;
             Movement.isDead = true;
+        }
         health = numOfHearts > 3 ? 3 : numOfHearts;
         switch (health)
         {
