@@ -2341,6 +2341,10 @@ PrefabInstance:
       propertyPath: TextMoney
       value: 
       objectReference: {fileID: 614402316}
+    - target: {fileID: 223210264, guid: afaa24ec90986ea4db428e4086815865, type: 3}
+      propertyPath: jumpForce
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 223210265, guid: afaa24ec90986ea4db428e4086815865, type: 3}
       propertyPath: hearts.Array.data[0]
       value: 
@@ -4546,7 +4550,7 @@ MonoBehaviour:
   player: {fileID: 1770013214}
   timeOffset: 5
   posOffset: {x: 0.08, y: 0.4}
-  leftLimit: -6.37
+  leftLimit: -6.33
   rightLimit: 36.57
   bottomLimit: -1.46
   topLimit: 1.6

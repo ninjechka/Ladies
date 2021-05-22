@@ -10459,6 +10459,10 @@ PrefabInstance:
       propertyPath: TextMoney
       value: 
       objectReference: {fileID: 1938867557}
+    - target: {fileID: 223210264, guid: afaa24ec90986ea4db428e4086815865, type: 3}
+      propertyPath: jumpForce
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 223210265, guid: afaa24ec90986ea4db428e4086815865, type: 3}
       propertyPath: hearts.Array.data[0]
       value: 

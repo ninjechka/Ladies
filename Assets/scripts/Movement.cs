@@ -8,8 +8,8 @@ public class Movement : MonoBehaviour
     public float hangTime = .2f;
     public AudioSource damageSound;
     private float hangCounter;
-    private float speed = 2f;
-    private float jumpForce = 4f;
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private float jumpForce;
     private Animator anim;
     private Rigidbody2D rb2D;
     private SpriteRenderer sprite;
@@ -43,11 +43,6 @@ public class Movement : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
             Run();
-        }
-        else if (Input.GetKey("e") && isGrounded)
-        {
-            anim.Play("attack");
-            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
         }
         else
         {
